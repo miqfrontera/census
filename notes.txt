@@ -1,0 +1,10 @@
+# Census
+
+Entitats:
+
+1. Country
+2. Location
+3. Emigrant
+
+a. Emigrant emigra a una localitat.
+b. Localitat pertany a un país.
