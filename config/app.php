@@ -41,6 +41,8 @@ return [
 
     'debug' => env('APP_DEBUG', false),
 
+    'https' => env('APP_HTTPS', false),
+
     /*
     |--------------------------------------------------------------------------
     | Application URL
