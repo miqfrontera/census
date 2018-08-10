@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: miquel
- * Date: 01/08/18
- * Time: 14:54
- */
 
 namespace Tests\Feature;
 

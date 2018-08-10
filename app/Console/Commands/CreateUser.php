@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\User;
+use Symfony\Component\Console\Exception\RuntimeException;
 
 class CreateUser extends Command
 {
@@ -20,6 +21,11 @@ class CreateUser extends Command
      * @var string
      */
     protected $description = "Creates a user. If no password provided a random one is created";
+
+    protected $email;
+    protected $name;
+    protected $password;
+
 
     /**
      * Create a new command instance.
@@ -38,29 +44,54 @@ class CreateUser extends Command
      */
     public function handle()
     {
+        $this->setEmail();
+        $this->setUserName();
+        $this->setPassword();
+
         $userModel = new User();
 
-        $name = $this->argument('name');
-        $email = $this->argument('email');
-        $password = $this->argument('password');
-        if (!$password) {
-            $password = uniqid();
-        }
 
         $this->info("#############################");
-        $this->info("Creating user for email " . $email);
+        $this->info("Creating user for email " . $this->email);
 
         $user = $userModel->create([
-            'name' => $name,
-            'email' => $email,
-            'password' => bcrypt($password)
+            'name' => $this->name,
+            'email' => $this->email,
+            'password' => bcrypt($this->password)
         ]);
 
         if ($user !== null) {
-            $this->info("User for email " . $email . " created with password = " . $password);
+            $this->info("User for email " . $this->email . " created with password = " . $this->password);
         } else {
             $this->info("Upss. Something went wrong. No user created. Try again.");
         }
         $this->info("#############################");
     }
+
+    public function setUserName()
+    {
+        $this->name = $this->argument('name');
+    }
+
+    public function setPassword()
+    {
+        $this->password = $this->argument('password');
+        if (!$this->password) {
+            $this->password = uniqid();
+        }
+    }
+
+    public function setEmail()
+    {
+        $this->email = $this->argument('email');
+
+        $usersWithEmail = User::where('email', $this->email)->count();
+
+        if ($usersWithEmail > 0) {
+            throw new RuntimeException(
+                "There is already one user with email $this->email. Cannot create a new one with this email"
+            );
+        }
+    }
+
 }
