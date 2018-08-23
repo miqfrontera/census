@@ -2,10 +2,12 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
+use App\User;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
-class AuthTest extends TestCase
+class AuthTest extends FeatureTest
 {
+    use DatabaseMigrations;
 
     /**
      * @test
@@ -33,5 +35,25 @@ class AuthTest extends TestCase
     {
         $response = $this->get(route('auth.password.reset.form'));
         $response->assertStatus(200);
+    }
+
+    /**
+     * @test
+     */
+    public function after_successful_login_it_redirects_to_dashboard_page()
+    {
+        $password = 'secret';
+        $user = factory(User::class)->create([
+            'password' => bcrypt($password)
+        ]);
+
+        $response = $this->post(route('auth.login'),
+            [
+                'email' => $user->email,
+                'password' => $password
+            ]
+        );
+
+        $response->assertRedirect('admin/');
     }
 }

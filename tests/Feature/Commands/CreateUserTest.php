@@ -5,22 +5,13 @@ namespace Tests\Feature\Commands;
 use Symfony\Component\Console\Exception\RuntimeException;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Faker\Factory;
 
 use App\User;
-use Tests\TestCase;
+use Tests\Feature\FeatureTest;
 
-class CreateUserTest extends TestCase
+class CreateUserTest extends FeatureTest
 {
     use DatabaseMigrations;
-
-    protected $faker;
-
-    public function __construct(string $name = null, array $data = [], string $dataName = '')
-    {
-        parent::__construct($name, $data, $dataName);
-        $this->faker = Factory::create();
-    }
 
     /**
      * @test

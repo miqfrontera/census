@@ -5,10 +5,10 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Home</div>
+                <div class="panel-heading">Admin Dashboard</div>
 
                 <div class="panel-body">
-                    Welcome to Census App. Now its under construction. See you soon.
+                    Welcome {{auth()->user()->email}} to the Admin
                 </div>
             </div>
         </div>

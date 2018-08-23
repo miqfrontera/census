@@ -8,6 +8,14 @@ Route::get('/', function () {
 
 Route::get('/emigrants', 'EmigrantsController@index');
 
+// Admin routes
+Route::group( ['prefix' => 'admin', 'middleware' => 'auth'],
+    function () {
+        Route::get('/')
+            ->name('admin.dashboard')
+            ->uses('Admin\AdminController@dashboard');
+});
+
 // Auth routes
 Route::get('login')
     ->name('auth.login.form')
