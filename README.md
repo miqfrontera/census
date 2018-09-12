@@ -13,5 +13,5 @@ Also it might help me to practice with some interesting things before use in rea
 
 So, this is only a project to play and learn with some kind of features with the only purpose to know new interesting things :-)
 
-#License
+# License
 Well, despite its only a project to play it is licensed under **GNU GPL v3.0**. You can find the complete license text [here](LICENSE.md)
